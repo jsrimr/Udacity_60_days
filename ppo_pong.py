@@ -1,5 +1,8 @@
 import math
 import random
+import logging
+log_file_name = "ppo_pong.log"
+logging.basicConfig(filename=log_file_name, filemode='w', format='%(name)s - %(levelname)s - %(message)s', level = logging.DEBUG)
 
 import gym
 import numpy as np
@@ -12,15 +15,12 @@ import torch.nn.functional as F
 from torch.distributions import Categorical
 import matplotlib.pyplot as plt
 
-import logging
-log_file_name = "ppo_pong.log"
-logging.basicConfig(filename=log_file_name, filemode='w', format='%(name)s - %(levelname)s - %(message)s', level = logging.DEBUG)
+import pong_utils
 
-use_cuda = torch.cuda.is_available()
-device   = torch.device("cuda" if use_cuda else "cpu")
+device   = pong_utils.device
 
 from common.multiprocessing_env import SubprocVecEnv
-from pong_util import preprocess_single, preprocess_batch
+from pong_utils import preprocess_single, preprocess_batch
 
 num_envs = 16
 env_name = "Pong-v0"
